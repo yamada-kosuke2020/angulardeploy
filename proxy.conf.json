@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "https://neutral.cybozu.com/g/api/v1/",
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}
