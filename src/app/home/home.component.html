@@ -5,8 +5,9 @@
     </span>
     <span>{{target.subject}}</span>
     <span>
-        <button mat-icon-button>
-            <mat-icon>exit_to_app</mat-icon>
+        <button mat-flat-button color="primary">
+            <mat-icon style="margin-right: 8px;">exit_to_app</mat-icon>
+            <span>会議終了</span>
         </button>
     </span>
 </mat-toolbar>
@@ -14,16 +15,16 @@
 <mat-tab-group mat-align-tabs="center">
     <mat-tab>
         <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">timer</mat-icon>
+            <mat-icon style="margin-right: 8px;">timer</mat-icon>
             タイマー
         </ng-template>
-        <app-timer [countDown]="countDown" [target]="target" [scheduleList]="scheduleList"
+        <app-timer [countDown]="period" [target]="target" [scheduleList]="scheduleList"
             (action)="doClick($event)"></app-timer>
     </mat-tab>
 
     <mat-tab>
         <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">event</mat-icon>
+            <mat-icon style="margin-right: 8px;">event</mat-icon>
             スケジュール
         </ng-template>
         <app-schedule [scheduleList]="scheduleList" (action)="doClick($event)"></app-schedule>

@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
   scheduleList: Array<Schedule>;
   schedule;
 
+
+  period;
+
   targetSchedule: Array<Schedule>
   target = new Schedule();
 
@@ -35,29 +38,24 @@ export class HomeComponent implements OnInit {
 
   constructor(private apiService: ApiService, public matDialog: MatDialog, private userService: UserService) {
 
-  }
 
-  // コンポーネント破棄
-  ngOnDestroy(){
-    this.timerStop();
-  }
+     // 開始時間
+     this.rangeStart = new Date();
 
-  ngOnInit(): void {
+     // 終了時間
+     this.rangeEnd = new Date();
+     this.rangeEnd.setHours(23, 59, 59, 999);
+ 
 
-    // 開始時間
-    this.rangeStart = new Date();
 
-    // 終了時間
-    this.rangeEnd = new Date();
-    this.rangeEnd.setHours(23, 59, 59, 999);
-
-    // 予定一覧取得
+     // 予定一覧取得
     this.apiService.getScheduleList(this.rangeStart, this.rangeEnd, this.userService.facilityId).subscribe(result => {
 
       this.schedule = result;
       console.log('今日の会議一覧');
       console.log(this.schedule);
 
+    
       // 対象の会議 
       console.log(this.schedule.events[0]);
 
@@ -109,10 +107,10 @@ export class HomeComponent implements OnInit {
         this.border = 'solid 10px gray';
         //this.countDown = "会議はありません";
 
-        this.countDown = 30;
-        this.timer = setInterval(() => {
-          this.debugTimer()
-        }, 1000)
+        // this.countDown = 30;
+        // this.timer = setInterval(() => {
+        //   this.debugTimer()
+        // }, 1000)
       } else {
 
         // 開催中の会議
@@ -124,15 +122,24 @@ export class HomeComponent implements OnInit {
         this.target.endDate = this.targetSchedule[0].endDate;
 
         //タイマー呼び出し
-        //setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
+        setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
 
         //デバッグ
-        this.countDown = 30;
-        this.timer = setInterval(() => {
-          this.debugTimer()
-        }, 1000)
+        // this.countDown = 30;
+        // this.timer = setInterval(() => {
+        //   this.debugTimer()
+        // }, 1000)
       }
     });
+
+  }
+
+  // コンポーネント破棄
+  ngOnDestroy(){
+    //this.timerStop();
+  }
+
+  ngOnInit(): void {
 
   }
 
@@ -195,29 +202,8 @@ export class HomeComponent implements OnInit {
   // タイマー
   startTimer(end: Date) {
     let currentDate = new Date();
-    let period = end.getTime() - currentDate.getTime();
-
-    console.log('ミリ秒--->' + period);
-
-    // マイナスをプラスに
-    period = period < 0 ? period * -1 : period;
-
-    // 時間を取得
-    let cHour = Math.floor(period / (1000 * 60 * 60));
-    period -= (cHour * (1000 * 60 * 60));
-
-    // 分を取得
-    let cMinute = Math.floor(period / (1000 * 60));
-    period -= (cMinute * (1000 * 60));
-
-    // 秒を取得
-    let cSecond = Math.floor(period / (1000));
-    period -= (cSecond * (1000));
-
-   // this.countDown = ("00" + cHour).slice(-2) + ':' + ("00" + cMinute).slice(-2) + ':' + ("00" + cSecond).slice(-2);
-
-    console.log(this.countDown);
-
+    this.period = end.getTime() - currentDate.getTime();
+    console.log('ミリ秒--->' + this.period);
   }
 
   // 延長のイベント検知

@@ -5,10 +5,10 @@
 {{routeParam}}
 <mat-card class="login-card">
 
-    <mat-card-title class="login-title">
-        MeTiMa
-    </mat-card-title>
-    <mat-card-content>
+    <mat-card-subtitle style="text-align: center;">ミ　ティ　マ</mat-card-subtitle>
+    <mat-card-title style="text-align: center;">Me Ti Ma</mat-card-title>
+   
+    <mat-card-content style="margin-top: 50px;">
 
         <form [formGroup]="myControl" (ngSubmit)="onSubmit()" class="login-form">
 
@@ -30,7 +30,7 @@
                 <mat-label>会議室選択</mat-label>
                 <mat-select [(value)]="selected">
                     <mat-option *ngFor="let facility of facilities" [value]="facility.id">
-                      {{facility.name}}
+                        {{facility.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../service/api.service';
+import { UserService } from '../service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -10,13 +11,19 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class ScheduleComponent implements OnInit {
 
+
   @Input() content: string;
   @Input() scheduleList;
- 
+
+  // 今見てる会議室の名前
+  facilityName;
+
   @Output() action = new EventEmitter<MouseEvent>();
 
   panelOpenState = false;
-  constructor(private apiService: ApiService, public matDialog: MatDialog) { }
+  constructor(private userService: UserService, private apiService: ApiService, public matDialog: MatDialog) {
+    this.facilityName = this.userService.facilityName;
+  }
 
   ngOnInit(): void {
 
@@ -24,7 +31,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   // 延長ダイアログ
-  extention(event){
+  extention(event) {
     this.action.emit(event);
     console.log('スケジュール画面で延長ボタン押された');
   }

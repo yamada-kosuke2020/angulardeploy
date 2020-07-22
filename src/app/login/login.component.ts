@@ -78,7 +78,10 @@ export class LoginComponent implements OnInit {
         this.userService.email = this.myControl.value.email;
         this.userService.base64 = endodedText;
         this.userService.facilityId = Number(this.selected);
-        this.userService.facilityName = "";
+
+        // selectedをキーにして施設名検索
+        let facilityName = this.facilities.find(f => f.id === this.selected);
+        this.userService.facilityName = facilityName.name;
 
         // ホーム画面へ遷移
         this.router.navigate(['']);
