@@ -1,1 +1,79 @@
-<p>schedule works!</p>
+<mat-card style="margin: 10px;" class="mat-elevation-z5">
+    <mat-card-title style="text-align: center;">
+        <h2>第２会議室のスケジュール</h2>
+    </mat-card-title>
+
+    <mat-card-content>
+        <h3></h3>
+
+        <mat-accordion>
+
+            <!-- スケジュールリスト -->
+            <mat-expansion-panel style="margin: 10px;" *ngFor="let s of scheduleList; first as first "
+                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+
+                <mat-expansion-panel-header>
+
+                    <mat-panel-title>
+                        {{s.startDate | date:'shortTime'}} ~ {{s.endDate | date:'shortTime'}}
+                    </mat-panel-title>
+
+
+                    <mat-panel-description>
+
+                        <p style="text-align: left;"><span
+                                style="background-color: indigo; color: white; margin-right: 10px;">{{s.eventMenu}}</span>
+                            {{s.subject}}</p>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+
+                <mat-card style="margin-top: 10px;">
+                    <p>参加者
+                        <span *ngFor="let atds of s.attendees" style="margin-right: 10px;">
+                            <mat-icon style="color: #388e3c; vertical-align: middle; margin-right: 5px;">person
+                            </mat-icon>
+                            {{atds.name}}
+                        </span></p>
+                </mat-card>
+
+
+                <mat-card style="margin-top: 10px;">
+                    <p>登録者
+                        <span>
+                            <mat-icon color="primary" style="vertical-align: middle; margin-right: 5px;">person
+                            </mat-icon>
+                            {{s.creatorName}}
+                        </span></p>
+
+                    <p>
+                        <span>
+                            <mat-icon>create</mat-icon> 登録日
+                            {{s.createdAt | date: 'yyy/MM/dd HH:mm'}}
+                        </span>
+                    </p>
+                </mat-card>
+
+                <mat-card style="margin-top: 10px;">
+                    <p>更新者
+                        <span>
+                            <mat-icon color="primary" style="vertical-align: middle; margin-right: 5px;">person
+                            </mat-icon>
+                            {{s.updaterName}}
+                        </span></p>
+                    <p>
+                        <mat-icon>update</mat-icon>更新日
+                        {{s.updatedAt  | date: 'yyy/MM/dd HH:mm'}}
+                    </p>
+                </mat-card>
+
+                <mat-action-row>
+                    <button mat-raised-button color="primary" (click)="extention($event)">会議を延長する</button>
+
+                </mat-action-row>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>

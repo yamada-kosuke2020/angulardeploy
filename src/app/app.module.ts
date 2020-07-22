@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
+import { EndOfMeetingDialogComponent } from './end-of-meeting-dialog/end-of-meeting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,13 +52,16 @@ import { MatStepperModule } from '@angular/material/stepper';
     TimerComponent,
     ScheduleComponent,
     LoginComponent,
-    MeetingExtentionDialogComponent
+    MeetingExtentionDialogComponent,
+    EndOfMeetingDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
