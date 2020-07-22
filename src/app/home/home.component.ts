@@ -203,6 +203,9 @@ export class HomeComponent implements OnInit {
   startTimer(end: Date) {
     let currentDate = new Date();
     this.period = end.getTime() - currentDate.getTime();
+    if(this.period === 0){
+      this.meetingEndDialog();
+    }
     console.log('ミリ秒--->' + this.period);
   }
 
