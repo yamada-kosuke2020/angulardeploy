@@ -20,8 +20,6 @@ export class ApiService {
       headers: new HttpHeaders().set('X-Cybozu-Authorization', authInfo),
     };
 
-    console.log('service ユーザー存在確認base64->' + authInfo);
-    console.log('service ユーザー存在確認email->' + email);
     return new Observable(observe => {
       this.http.get('/api/base/users?name=' + email, httpOptions).subscribe(result => {
         
@@ -40,12 +38,12 @@ export class ApiService {
   }
 
   // 予定一覧取得
-  getScheduleList(startTime: Date, endTime: Date, facilityId: number): Observable<Schedule> {
+  getScheduleList(startTime: Date, endTime: Date, facilityId: number): Observable<any> {
 
     let httpOptions = {
       headers: new HttpHeaders().set('X-Cybozu-Authorization', 'eWFtYWRhLmtvc3VrZUBuZXV0LmNvLmpwOnBhc3N3b3JkMTEx'),
     };
-    return this.http.get<Schedule>('/api/schedule/events?limit=200&rangeStart=' + startTime.toISOString() +
+    return this.http.get('/api/schedule/events?limit=200&rangeStart=' + startTime.toISOString() +
       '&rangeEnd=' + endTime.toISOString() + '&target=' + facilityId + '&targetType=facility&orderBy=start asc', httpOptions);
   }
 
