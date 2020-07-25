@@ -14,13 +14,20 @@ import { MeetingExtentionDialogComponent } from '../meeting-extention-dialog/mee
 })
 export class HomeComponent implements OnInit {
 
+  // 絞り込み開始時間
   rangeStart;
+
+  // 絞り込み終了時間
   rangeEnd;
+
+  // 予定一覧
   scheduleList: Array<Schedule>;
-  schedule;
 
+  //schedule;
 
+  // ミリ秒
   period;
+
 
   targetSchedule: Array<Schedule>
   target = new Schedule();
@@ -30,7 +37,7 @@ export class HomeComponent implements OnInit {
   meetingEnd;
 
   timer;
-  countDown:number;
+  countDown: number;
 
   // timerのスタイル
   border = 'solid 10px #33b5e5';
@@ -38,104 +45,94 @@ export class HomeComponent implements OnInit {
 
   constructor(private apiService: ApiService, public matDialog: MatDialog, private userService: UserService) {
 
+    // 開始時間
+    this.rangeStart = new Date();
+    //this.rangeStart.setHours(23, 0, 0, 0);
 
-     // 開始時間
-     this.rangeStart = new Date();
+    // 終了時間
+    this.rangeEnd = new Date();
+    this.rangeEnd.setHours(23, 59, 59, 999);
 
-     // 終了時間
-     this.rangeEnd = new Date();
-     this.rangeEnd.setHours(23, 59, 59, 999);
- 
-
-
-     // 予定一覧取得
+    // 予定一覧取得
     this.apiService.getScheduleList(this.rangeStart, this.rangeEnd, this.userService.facilityId).subscribe(result => {
 
-      this.schedule = result;
-      console.log('今日の会議一覧');
-      console.log(this.schedule);
+      // 会議が取得できたか
+      if (result.events.length == 0) {
 
-    
-      // 対象の会議 
-      console.log(this.schedule.events[0]);
+        console.log("今日の予定はありません");
 
-
-      // クラスに詰める
-      this.scheduleList = this.schedule.events.map(element => {
-
-        const tempScedule = new Schedule();
-
-        // TODO nullチェックする
-        tempScedule.subject = element.subject;
-        tempScedule.startDate = element.start.dateTime;
-        tempScedule.endDate = element.end.dateTime;
-        tempScedule.creatorName = element.creator.name;
-        tempScedule.eventMenu = element.eventMenu;
-        tempScedule.createdAt = element.createdAt;
-        tempScedule.updatedAt = element.updatedAt;
-        tempScedule.updaterName = element.updater.name;
-        tempScedule.attendees = element.attendees.map(atd => {
-
-          const atendee = new Employee();
-
-          atendee.id = atd.id;
-          atendee.name = atd.name;
-          atendee.type = atd.type;
-          atendee.code = atd.code;
-
-          return atendee;
-        });
-        return tempScedule;
-      });
-
-      console.log('homeでscheduleListに保存できた');
-
-      const today = new Date();
-
-      // 今の時間適当にセット
-      //today.setHours(18, 0, 0, 0);
-
-      // 今の時間にマッチする会議を検索
-      this.targetSchedule = this.scheduleList.filter((s) => {
-        return (new Date(s.startDate) <= today && new Date(s.endDate) >= today);
-      });
-
-      if (this.targetSchedule.length == 0) {
-        // 会議が見つからない
-        console.log('会議はありません');
-        this.meetingSubject = '会議はありません';
-        this.border = 'solid 10px gray';
-        //this.countDown = "会議はありません";
-
-        // this.countDown = 30;
-        // this.timer = setInterval(() => {
-        //   this.debugTimer()
-        // }, 1000)
       } else {
 
-        // 開催中の会議
-        console.log(JSON.stringify('今の開催中の会議------>' + this.targetSchedule[0].subject));
+        console.log('今日の会議一覧');
+        console.log(result);
 
-        // 1件にする
-        this.target.subject = this.targetSchedule[0].subject;
-        this.target.startDate = this.targetSchedule[0].startDate;
-        this.target.endDate = this.targetSchedule[0].endDate;
+        // 対象の会議 
+        console.log(result.events[0]);
 
-        //タイマー呼び出し
-        setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
+        // クラスに詰める
+        this.scheduleList = result.events.map(element => {
 
-        //デバッグ
-        // this.countDown = 30;
-        // this.timer = setInterval(() => {
-        //   this.debugTimer()
-        // }, 1000)
+          const tempScedule = new Schedule();
+
+          // TODO nullチェックする
+          tempScedule.subject = element.subject;
+          tempScedule.startDate = element.start.dateTime;
+          tempScedule.endDate = element.end.dateTime;
+          tempScedule.creatorName = element.creator.name;
+          tempScedule.eventMenu = element.eventMenu;
+          tempScedule.createdAt = element.createdAt;
+          tempScedule.updatedAt = element.updatedAt;
+          tempScedule.updaterName = element.updater.name;
+          tempScedule.attendees = element.attendees.map(atd => {
+
+            const atendee = new Employee();
+
+            atendee.id = atd.id;
+            atendee.name = atd.name;
+            atendee.type = atd.type;
+            atendee.code = atd.code;
+
+            return atendee;
+          });
+          return tempScedule;
+        });
+
+        console.log('homeでscheduleListに保存できた');
+
+
+        // 今の時間にマッチする会議を検索
+        this.targetSchedule = this.scheduleList.filter((s) => {
+          return (new Date(s.startDate) <= this.rangeStart && new Date(s.endDate) >= this.rangeStart);
+        });
+
+        // 現在開催中の会議がない
+        if (this.targetSchedule.length == 0) {
+          
+          // 対象の会議が見つからない
+          console.log('現在開催中の会議はありません');
+          this.border = 'solid 10px gray';
+         
+        } else {
+
+          // 開催中の会議
+          console.log(JSON.stringify('今の開催中の会議------>' + this.targetSchedule[0].subject));
+
+          // 1件にする
+          this.target.subject = this.targetSchedule[0].subject;
+          this.target.startDate = this.targetSchedule[0].startDate;
+          this.target.endDate = this.targetSchedule[0].endDate;
+
+          //タイマー呼び出し
+          setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
+
+        }
       }
     });
 
   }
 
   // コンポーネント破棄
-  ngOnDestroy(){
+  ngOnDestroy() {
     //this.timerStop();
   }
 
@@ -146,7 +143,7 @@ export class HomeComponent implements OnInit {
   // デバッグ用
   debugTimer() {
     this.countDown--;
-    if(this.countDown == 0){
+    if (this.countDown == 0) {
       this.meetingEndDialog();
     }
     console.log(this.countDown);
@@ -155,7 +152,7 @@ export class HomeComponent implements OnInit {
   // 会議終了ダイアログ
   meetingEndDialog() {
     let dialogRef = this.matDialog.open(EndOfMeetingDialogComponent, {
-  
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -203,7 +200,7 @@ export class HomeComponent implements OnInit {
   startTimer(end: Date) {
     let currentDate = new Date();
     this.period = end.getTime() - currentDate.getTime();
-    if(this.period === 0){
+    if (this.period === 0) {
       this.meetingEndDialog();
     }
     console.log('ミリ秒--->' + this.period);

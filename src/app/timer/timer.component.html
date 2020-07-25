@@ -4,14 +4,19 @@
 
 
         <!-- タイマーの円 -->
-        <div class="circle" [style.border]="border" style="margin-top: 100px;">
+        <div class="circle" [style.border]="border" style="margin-top: 50px;">
             <span [style.color]="color" style="font-size: 2.5em;">{{countString}}</span>
         </div>
 
+        <!-- 現在の会議があって次の会議がない場合 -->
         <button mat-raised-button color="primary" (click)="extention($event)">
             会議を延長する
         </button>
 
     </mat-card-content>
 
+    <mat-card-actions>
+        <button  mat-raised-button color="primary">前の会議</button>
+        <button  mat-raised-button color="primary">次の会議</button>
+    </mat-card-actions>
 </mat-card>

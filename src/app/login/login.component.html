@@ -17,14 +17,14 @@
                 <input matInput type="text" formControlName="email">
             </mat-form-field>
 
-            <p *ngIf="email.invalid">メールアドレスは必須です</p>
+            <p *ngIf="email.invalid" style="color: red;">メールアドレスは必須です</p>
 
             <mat-form-field appearance="outline">
                 <mat-label>パスワード</mat-label>
                 <input matInput type="password" formControlName="pass">
             </mat-form-field>
 
-            <p *ngIf="pass.invalid">パスワードは必須です</p>
+            <p *ngIf="pass.invalid" style="color: red;">パスワードは必須です</p>
 
             <mat-form-field appearance="fill">
                 <mat-label>会議室選択</mat-label>

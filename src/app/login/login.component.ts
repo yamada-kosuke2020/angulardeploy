@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
 
 
     this.myControl = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      pass: new FormControl('', [Validators.required]),
+      email: new FormControl('yamada.kosuke@neut.co.jp', [Validators.required]),
+      pass: new FormControl('password111', [Validators.required]),
     });
 
     // パラメタ取得
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
      
       // ユーザー検索
       this.apiService.userExists(this.myControl.value.email, endodedText).subscribe(result => {
-        console.log('userexists')
+        
         if (!result) {
           this.message = '※メールアドレスかパスワードが違います';
           return;
