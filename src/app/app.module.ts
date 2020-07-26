@@ -44,6 +44,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
 import { EndOfMeetingDialogComponent } from './end-of-meeting-dialog/end-of-meeting-dialog.component';
+import { ExitDialogComponent } from './exit-dialog/exit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { EndOfMeetingDialogComponent } from './end-of-meeting-dialog/end-of-meet
     ScheduleComponent,
     LoginComponent,
     MeetingExtentionDialogComponent,
-    EndOfMeetingDialogComponent
+    EndOfMeetingDialogComponent,
+    ExitDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.routeParam = JSON.stringify(this.activeRoute.snapshot.queryParamMap);
     // 選択された会議室
     this.selected = this.activeRoute.snapshot.queryParamMap.get('facility');
-    
+
   }
 
   ngOnInit(): void {
@@ -54,22 +54,22 @@ export class LoginComponent implements OnInit {
 
   // ログインボタンクリック
   onSubmit() {
-    
+
     if (this.myControl.invalid) {
-      
+
       this.message = "バリデーションエラー";
-    
+
     } else {
-     
+
       // base64化
       const planeText: string = this.myControl.value.email + ":" + this.myControl.value.pass;
       const endodedText = btoa(planeText);
 
       console.log('メールアドレスとパスワードをbase64化---->' + endodedText);
-     
+
       // ユーザー検索
       this.apiService.userExists(this.myControl.value.email, endodedText).subscribe(result => {
-        
+
         if (!result) {
           this.message = '※メールアドレスかパスワードが違います';
           return;
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         // ユーザーがいたらサービスに保存
         this.userService.email = this.myControl.value.email;
         this.userService.base64 = endodedText;
-        this.userService.facilityId = Number(this.selected);
+        this.userService.facilityId = this.selected;
 
         // selectedをキーにして施設名検索
         let facilityName = this.facilities.find(f => f.id === this.selected);

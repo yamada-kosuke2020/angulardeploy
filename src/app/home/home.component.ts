@@ -6,6 +6,7 @@ import { Employee } from '../class/employee';
 import { MatDialog } from '@angular/material/dialog';
 import { EndOfMeetingDialogComponent } from '../end-of-meeting-dialog/end-of-meeting-dialog.component';
 import { MeetingExtentionDialogComponent } from '../meeting-extention-dialog/meeting-extention-dialog.component';
+import { ExitDialogComponent } from '../exit-dialog/exit-dialog.component'
 
 @Component({
   selector: 'app-home',
@@ -23,8 +24,6 @@ export class HomeComponent implements OnInit {
   // 予定一覧
   scheduleList: Array<Schedule>;
 
-  //schedule;
-
   // ミリ秒
   period;
 
@@ -36,22 +35,30 @@ export class HomeComponent implements OnInit {
   meetingStart;
   meetingEnd;
 
-  timer;
-  countDown: number;
+  flg = false;
 
-  // timerのスタイル
-  border = 'solid 10px #33b5e5';
-  color = 'black';
+  timer = null;
+  countDown: number;
 
   constructor(private apiService: ApiService, public matDialog: MatDialog, private userService: UserService) {
 
     // 開始時間
-    this.rangeStart = new Date();
-    //this.rangeStart.setHours(23, 0, 0, 0);
+    this.rangeStart = new Date(2020, 6, 27, 10, 0, 0);
+    console.log("開始" + this.rangeStart);
 
     // 終了時間
-    this.rangeEnd = new Date();
-    this.rangeEnd.setHours(23, 59, 59, 999);
+    this.rangeEnd = new Date(2020, 6, 27, 23, 59, 59);
+    //this.rangeEnd.setHours(23, 59, 59, 999);
+
+    console.log("終了" + this.rangeEnd);
+  }
+
+  // コンポーネント破棄
+  ngOnDestroy() {
+    //this.timerStop();
+  }
+
+  ngOnInit(): void {
 
     // 予定一覧取得
     this.apiService.getScheduleList(this.rangeStart, this.rangeEnd, this.userService.facilityId).subscribe(result => {
@@ -60,6 +67,8 @@ export class HomeComponent implements OnInit {
       if (result.events.length == 0) {
 
         console.log("今日の予定はありません");
+        this.target.subject = "会議なし";
+        setInterval(() => { this.startTimer(new Date(2020, 6, 26, 21, 30)) }, 1000);
 
       } else {
 
@@ -75,6 +84,7 @@ export class HomeComponent implements OnInit {
           const tempScedule = new Schedule();
 
           // TODO nullチェックする
+          tempScedule.id = element.id;
           tempScedule.subject = element.subject;
           tempScedule.startDate = element.start.dateTime;
           tempScedule.endDate = element.end.dateTime;
@@ -97,8 +107,8 @@ export class HomeComponent implements OnInit {
           return tempScedule;
         });
 
-        console.log('homeでscheduleListに保存できた');
 
+        console.log(this.scheduleList);
 
         // 今の時間にマッチする会議を検索
         this.targetSchedule = this.scheduleList.filter((s) => {
@@ -106,47 +116,26 @@ export class HomeComponent implements OnInit {
         });
 
         // 現在開催中の会議がない
-        if (this.targetSchedule.length == 0) {
-          
-          // 対象の会議が見つからない
+        if (this.targetSchedule.length === 0) {
+
           console.log('現在開催中の会議はありません');
-          this.border = 'solid 10px gray';
-         
+
         } else {
 
           // 開催中の会議
           console.log(JSON.stringify('今の開催中の会議------>' + this.targetSchedule[0].subject));
 
-          // 1件にする
+          this.target.id = this.targetSchedule[0].id;
           this.target.subject = this.targetSchedule[0].subject;
           this.target.startDate = this.targetSchedule[0].startDate;
           this.target.endDate = this.targetSchedule[0].endDate;
 
           //タイマー呼び出し
-          setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
-
+          this.timer = setInterval(() => { this.startTimer(new Date(this.targetSchedule[0].endDate)) }, 1000);
+          //this.timer = setInterval(() => { this.startTimer(new Date(2020, 6, 26, 21, 30)) }, 1000);
         }
       }
     });
-
-  }
-
-  // コンポーネント破棄
-  ngOnDestroy() {
-    //this.timerStop();
-  }
-
-  ngOnInit(): void {
-
-  }
-
-  // デバッグ用
-  debugTimer() {
-    this.countDown--;
-    if (this.countDown == 0) {
-      this.meetingEndDialog();
-    }
-    console.log(this.countDown);
   }
 
   // 会議終了ダイアログ
@@ -160,6 +149,7 @@ export class HomeComponent implements OnInit {
 
       // 終了ボタン押されてたら
       if (result === 'exit') {
+        console.log('タイマー停止')
         this.timerStop();
       }
 
@@ -178,11 +168,11 @@ export class HomeComponent implements OnInit {
     let endTime: string = ("0" + new Date(this.target.endDate).getHours()).slice(-2) + ':' + ("0" + new Date(this.target.endDate).getMinutes()).slice(-2);
 
     let dialogRef = this.matDialog.open(MeetingExtentionDialogComponent, {
-      data: { 'endTime': endTime }
+      data: { 'endTime': endTime, 'baseEndTime': this.target.endDate }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Extention Dialog result: ${result}`);
+      console.log(result);
       // 再読み込み
       //this.ngOnInit();
     });
@@ -192,23 +182,70 @@ export class HomeComponent implements OnInit {
   // timerストップ
   timerStop() {
     clearInterval(this.timer);
-    this.border = 'solid 10px gray';
-    //this.countDown = "会議は終了しました";
   }
 
   // タイマー
   startTimer(end: Date) {
     let currentDate = new Date();
     this.period = end.getTime() - currentDate.getTime();
-    if (this.period === 0) {
+    if (this.period <= 0 && !this.flg) {
       this.meetingEndDialog();
+      this.flg = true;
     }
-    console.log('ミリ秒--->' + this.period);
   }
 
   // 延長のイベント検知
   doClick(event) {
     console.log('home:子のイベント検知');
     this.extention();
+  }
+
+  exit() {
+
+    this.timerStop();
+    let dialogRef = this.matDialog.open(ExitDialogComponent, {
+
+    });
+
+  }
+
+  nextCount = 1;
+  next() {
+
+    if (this.nextCount <= this.scheduleList.length) {
+      this.nextCount += 1;
+      this.target.id = this.scheduleList[this.nextCount - 1].id;
+      this.target.subject = this.scheduleList[this.nextCount - 1].subject;
+      this.target.startDate = this.scheduleList[this.nextCount - 1].startDate;
+      this.target.endDate = this.scheduleList[this.nextCount - 1].endDate;
+
+      if (this.timer != null) {
+        clearInterval(this.timer);
+      }
+
+      this.timer = setInterval(() => { this.startTimer(new Date(this.target.endDate)) }, 1000);
+
+    }
+    console.log(this.nextCount);
+    console.log(this.scheduleList.length);
+  }
+
+  back() {
+
+    if (this.nextCount > 0) {
+      this.nextCount -= 1;
+      this.target.id = this.scheduleList[this.nextCount - 1].id;
+      this.target.subject = this.scheduleList[this.nextCount - 1].subject;
+      this.target.startDate = this.scheduleList[this.nextCount - 1].startDate;
+      this.target.endDate = this.scheduleList[this.nextCount - 1].endDate;
+
+      if (this.timer != null) {
+        clearInterval(this.timer);
+      }
+
+      this.timer = setInterval(() => { this.startTimer(new Date(this.target.endDate)) }, 1000);
+
+    }
+    console.log(this.nextCount);
   }
 }

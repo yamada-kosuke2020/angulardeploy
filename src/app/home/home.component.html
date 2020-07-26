@@ -5,12 +5,26 @@
     </span>
     <span>{{target.subject}}</span>
     <span>
-        <button mat-flat-button color="primary">
+        <button mat-flat-button color="primary" (click)="exit()">
             <mat-icon style="margin-right: 8px;">exit_to_app</mat-icon>
             <span>会議終了</span>
         </button>
     </span>
 </mat-toolbar>
+
+<mat-card>
+    <div style="text-align: left; float: left;">
+        <button mat-raised-button color="accent" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>前の会議
+        </button>
+    </div>
+
+    <div style="text-align: right;">
+        <button mat-raised-button color="accent" (click)="next()">
+            次の会議<mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+</mat-card>
 
 <mat-tab-group mat-align-tabs="center">
     <mat-tab>
@@ -18,8 +32,8 @@
             <mat-icon style="margin-right: 8px;">timer</mat-icon>
             タイマー
         </ng-template>
-        <app-timer [countDown]="period" [target]="target" [scheduleList]="scheduleList"
-            (action)="doClick($event)"></app-timer>
+        <app-timer [countDown]="period" [target]="target" [scheduleList]="scheduleList" (action)="doClick($event)">
+        </app-timer>
     </mat-tab>
 
     <mat-tab>

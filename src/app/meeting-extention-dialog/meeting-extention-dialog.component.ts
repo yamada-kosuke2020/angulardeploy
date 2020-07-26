@@ -1,6 +1,7 @@
-import { Component, OnInit,  Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../service/api.service';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-extention-dialog',
@@ -9,42 +10,42 @@ import { ApiService } from '../service/api.service';
 })
 export class MeetingExtentionDialogComponent implements OnInit {
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data : any,
-  public matDialogRef : MatDialogRef<MeetingExtentionDialogComponent> , private apiService: ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public matDialogRef: MatDialogRef<MeetingExtentionDialogComponent>, private apiService: ApiService, private userService: UserService) { }
 
   ngOnInit(): void {
 
   }
 
   // 延長ボタン押下
-  extention(){
+  extention(value) {
 
+    console.log(value)
     // APIデータ更新
-  
-    let jsonString = `{
+
+    let obj = {
       "start": {
         "dateTime": "2020-07-25T03:00:00+09:00",
         "timeZone": "Asia/Tokyo"
       },
       "end": {
-        "dateTime": "2020-07-25T06:00:00+09:00",
+        "dateTime": "2020-07-25T" + value + ":00+09:00",
         "timeZone": "Asia/Tokyo"
       },
       "isStartOnly": "false",
       "facilities": [
         {
-          "code": "002"
+          "id": this.userService.facilityId
         }
       ]
-    }`;
+    };
 
-    let obj = JSON.parse(jsonString);
-
-    this.apiService.updateSchedule(obj).subscribe(result => {
+    this.apiService.updateSchedule(obj, '105629').subscribe(result => {
       console.log(JSON.stringify(result));
+      this.matDialogRef.close('updated');
     });
 
-    this.matDialogRef.close('updated');
+
   }
 
 }

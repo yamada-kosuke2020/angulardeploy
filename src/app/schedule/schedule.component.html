@@ -4,8 +4,11 @@
     </mat-card-title>
 
     <mat-card-content>
-       
+
         <mat-accordion>
+
+
+            <p style="text-align: center;" *ngIf="scheduleList === undefined">{{message}}</p>
 
             <!-- スケジュールリスト -->
             <mat-expansion-panel style="margin: 10px;" *ngFor="let s of scheduleList; first as f" [expanded]="f"
@@ -14,7 +17,8 @@
                 <mat-expansion-panel-header>
 
                     <mat-panel-title>
-                       <mat-icon *ngIf="f" style="margin-right: 8px; color: green;">double_arrow</mat-icon> {{s.startDate | date:'HH:mm'}} ~ {{s.endDate | date:'HH:mm'}}
+                        <mat-icon *ngIf="f" style="margin-right: 8px; color: green;">double_arrow</mat-icon>
+                        {{s.startDate | date:'HH:mm'}} ~ {{s.endDate | date:'HH:mm'}}
                     </mat-panel-title>
 
 
@@ -68,7 +72,7 @@
                 </mat-card>
 
                 <mat-action-row *ngIf="f">
-                    <button mat-raised-button color="primary" (click)="extention($event)">会議を延長する</button>
+                    <button mat-raised-button color="warn" (click)="extention($event)">会議を延長する</button>
 
                 </mat-action-row>
 

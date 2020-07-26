@@ -1,6 +1,7 @@
-import {Employee} from './employee';
+import { Employee } from './employee';
 
-export class Schedule{
+export class Schedule {
+    id: string;
     subject: string;
     startDate: string;
     endDate: string;
