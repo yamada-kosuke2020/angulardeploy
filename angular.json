@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "metima"
+  "defaultProject": "metima",
+  "cli": {
+    "analytics": false
+  }
 }
