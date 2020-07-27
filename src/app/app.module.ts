@@ -46,7 +46,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { EndOfMeetingDialogComponent } from './end-of-meeting-dialog/end-of-meeting-dialog.component';
 import { ExitDialogComponent } from './exit-dialog/exit-dialog.component';
 
-import { FlexLayoutModule } from '@angular/flex-layout'
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -105,7 +105,9 @@ import { FlexLayoutModule } from '@angular/flex-layout'
   ],
   providers: [],
   bootstrap: [AppComponent],
+
   entryComponents: [
+
     MeetingExtentionDialogComponent,
     EndOfMeetingDialogComponent,
     ExitDialogComponent

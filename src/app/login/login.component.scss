@@ -1,8 +1,13 @@
 #login-card{
-    margin: 0 auto; /*左右の余白が自動計算されて中央寄せ*/
-    width: 500px;
-    text-align: center;
-    margin-top: 50px;
+     margin: auto; /*左右の余白が自動計算されて中央寄せ*/
+     position: absolute;
+     top: 0;
+     right: 0;
+     left: 0;
+     bottom: 0;
+     width: 500px;
+     text-align: center;
+     margin-top: 50px;
 }
 
 #subtitle{
