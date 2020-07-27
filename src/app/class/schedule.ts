@@ -11,4 +11,5 @@ export class Schedule {
     eventMenu: string;
     createdAt: string;
     updatedAt: string;
+    memo: string;
 }

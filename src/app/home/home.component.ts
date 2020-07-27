@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   meetingSubject;
   meetingStart;
   meetingEnd;
+  memo: string;
 
   flg = false;
 
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit {
           // TODO nullチェックする
           tempScedule.id = element.id;
           tempScedule.subject = element.subject;
+          tempScedule.memo = element.notes;
           tempScedule.startDate = element.start.dateTime;
           tempScedule.endDate = element.end.dateTime;
           tempScedule.creatorName = element.creator.name;
