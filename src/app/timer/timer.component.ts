@@ -19,17 +19,22 @@ export class TimerComponent implements OnInit {
   // 文字の色
   color = ''
 
-  //試し
-  //試し2
   @Input() countDown;
   @Input() scheduleList: Array<Schedule>;
   @Output() action = new EventEmitter<MouseEvent>();
   @Input() target: Schedule;
 
+  blueFlame: boolean;
+  yellowFlame: boolean;
+  redFlame: boolean;
+
   constructor(public matDialog: MatDialog) { }
 
   ngOnInit(): void {
     console.log(this.countDown);
+    this.blueFlame = false;
+    this.yellowFlame = false;
+    this.redFlame = false;
   }
 
 
@@ -38,25 +43,37 @@ export class TimerComponent implements OnInit {
     if (this.scheduleList === undefined || this.scheduleList.length == 0) {
 
     }
-    this.border = 'solid 20px skyblue'
+    // this.border = 'solid 20px skyblue'
+    this.blueFlame = true;
+    this.yellowFlame = false;
+    this.redFlame = false;
 
 
     console.log('change    ' + this.countDown);
 
     // 残り時間で色を変える
     if (this.countDown <= 600000) {
-      this.border = 'solid 20px yellow'
-      this.color = 'yellow'
+      // this.border = 'solid 20px yellow'
+      // this.color = 'yellow'
+      this.blueFlame = false;
+      this.yellowFlame = true;
+      this.redFlame = false;
     }
 
     if (this.countDown <= 300000) {
-      this.border = 'solid 20px red'
-      this.color = 'red'
+      // this.border = 'solid 20px red'
+      // this.color = 'red'
+      this.blueFlame = false;
+      this.yellowFlame = false;
+      this.redFlame = true;
     }
 
 
     if (this.countDown <= 0) {
-      this.color = 'red'
+      // this.color = 'red'
+      this.blueFlame = false;
+      this.yellowFlame = false;
+      this.redFlame = true;
     }
 
     // マイナスをプラスに
