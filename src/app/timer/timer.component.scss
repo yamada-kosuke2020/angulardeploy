@@ -1,9 +1,173 @@
+// .circle{
+//     width: 300px;
+//     height: 300px;
+//     border-radius: 50%;
+//     text-align: center;
+//     line-height: 300px;
+//     border: solid 10px gray;
+//     margin: 0 auto;
+// }
+
+/* 親要素に対してtext-alignを指定することで中央寄せ */
+
+.parent {
+    text-align: center;
+  }
+
+/* 円 青色*/
+
 .circle{
+    display: inline-block;
+    position: relative;
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    text-align: center;
+    background-color:white;
+    text-align:center;
     line-height: 300px;
-    border: solid 10px gray;
-    margin: 0 auto;
+    margin: 100px auto;
+  }
+  .circle::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    border-radius: 50%;
+    background-color: rgba(21, 233, 233, 0.4);
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    z-index: -1;
+  }
+  @keyframes pulse{
+    100%{
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
+  /* 円 黄色*/
+
+.circle2{
+  display: inline-block;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color:white;
+  text-align:center;
+  line-height: 300px;
+  margin: 100px auto;
 }
+.circle2::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  border-radius: 50%;
+  background-color: rgba(255, 251, 0, 0.76);
+  animation-name: pulse;
+  animation-duration: 0.9s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  z-index: -1;
+}
+@keyframes pulse{
+  100%{
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* 円 赤色*/
+
+.circle3{
+  display: inline-block;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color:white;
+  text-align:center;
+  line-height: 300px;
+  margin: 100px auto;
+}
+.circle3::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.76);
+  animation-name: pulse;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  z-index: -1;
+}
+@keyframes pulse{
+  100%{
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* 円 灰色*/
+
+.circle4{
+  display: inline-block;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color:white;
+  text-align:center;
+  line-height: 300px;
+  margin: 100px auto;
+}
+.circle4::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  border-radius: 50%;
+  background-color: rgba(38, 41, 41, 0.4);
+  animation-name: pulse;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  z-index: -1;
+}
+@keyframes pulse{
+  100%{
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+/*タイマーの文字*/
+  .timer{
+    font-size: 2.5em;
+    /* 影っぽく */
+    text-shadow: 1px 1px 2px silver;
+  }
+
+  .box {
+    position: relative;
+    height: 100px;
+  }
+
+  .meeting{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: block;
+  }

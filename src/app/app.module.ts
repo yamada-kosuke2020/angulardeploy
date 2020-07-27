@@ -103,6 +103,10 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
     FlexLayoutModule,
   ],
+  entryComponents: [
+    MeetingExtentionDialogComponent,
+    EndOfMeetingDialogComponent,
+    ExitDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

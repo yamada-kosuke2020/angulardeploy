@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
 
 
     this.myControl = new FormGroup({
-      email: new FormControl('kumazawa.natsuki@neut.co.jp', [Validators.required]),
-      pass: new FormControl('sej2g3cv', [Validators.required]),
+      email: new FormControl('ota.moeka@neut.co.jp', [Validators.required]),
+      pass: new FormControl('soraru430', [Validators.required]),
     });
 
     // パラメタ取得
