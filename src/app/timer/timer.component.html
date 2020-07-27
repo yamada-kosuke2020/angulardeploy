@@ -1,15 +1,33 @@
-<mat-card style="margin: 10px;" class="mat-elevation-z5">
+<!-- <mat-card style="margin: 10px;" class="mat-elevation-z5">
 
-    <mat-card-content>
+    <mat-card-content> -->
 
         <!-- タイマーの円 -->
-        <div class="circle" [style.border]="border" style="margin-top: 50px;">
+        <!-- <div class="circle" [style.border]="border" style="margin-top: 50px;">
             <span [style.color]="color" style="font-size: 2.5em;">{{countString}}</span>
+        </div> -->
+
+        <div class="parent">
+            <span *ngIf="blueFlame" id="circle" class="circle">
+                <div class="timer">{{countString}}</div>
+            </span>
+            <span *ngIf="yellowFlame" id="circle2" class="circle2">
+                <div class="timer">{{countString}}</div>
+            </span>
+            <span *ngIf="redFlame" id="circle3" id="circle3" class="circle3">
+                <div class="timer">{{countString}}</div>
+            </span>
+            <!-- <span *ngIf="grayFlame" id="circle4" class="circle4">
+                <div class="timerEnd">会議を終了しました</div>
+            </span> -->
+        
         </div>
 
-        <button mat-raised-button color="warn" (click)="extention($event)">
+        <div class="box">
+        <button class="meeting" mat-raised-button color="warn" (click)="extention($event)">
             会議を延長する
         </button>
+    </div>
 
-    </mat-card-content>
-</mat-card>
+    <!-- </mat-card-content>
+</mat-card> -->
