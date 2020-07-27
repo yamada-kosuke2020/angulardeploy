@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit {
 
   // ミリ秒
   period;
+  
+  //会議終了ダイアログの終了ボタンが押されたか
+  result;
+  grayFlame;
 
 
   targetSchedule: Array<Schedule>
@@ -203,12 +207,17 @@ export class HomeComponent implements OnInit {
   }
 
   exit() {
-
-    this.timerStop();
     let dialogRef = this.matDialog.open(ExitDialogComponent, {
 
     });
-
+    dialogRef.afterClosed().subscribe((result:any)=>{
+      this.result=result;
+      if(this.result=="true"){
+        this.grayFlame=true;
+        console.log("タイマーを止めるよ");
+        this.timerStop();
+      }
+    });
   }
 
   nextCount = 1;
