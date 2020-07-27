@@ -20,7 +20,7 @@ export class TimerComponent implements OnInit {
   color = ''
 
   //試し
-
+  //試し2
   @Input() countDown;
   @Input() scheduleList: Array<Schedule>;
   @Output() action = new EventEmitter<MouseEvent>();
