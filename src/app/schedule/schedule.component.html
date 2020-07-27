@@ -33,16 +33,18 @@
 
 
                 <mat-card style="margin-top: 10px;">
-                    <p>参加者
+                    <p>＜参加者＞<br>
                         <span *ngFor="let atds of s.attendees" style="margin-right: 10px;">
                             <mat-icon style="color: #388e3c; vertical-align: middle; margin-right: 5px;">person
                             </mat-icon>
                             {{atds.name}}
                         </span></p>
+                    <p>＜メモ＞<br>
+                        {{s.memo}}
+                    </p>
                 </mat-card>
 
-
-                <mat-card style="margin-top: 10px;">
+                <!-- <mat-card style="margin-top: 10px;">
                     <p>登録者
                         <span>
                             <mat-icon color="primary" style="vertical-align: middle; margin-right: 5px;">person
@@ -69,7 +71,7 @@
                         <mat-icon>update</mat-icon>更新日
                         {{s.updatedAt  | date: 'yyy/MM/dd HH:mm'}}
                     </p>
-                </mat-card>
+                </mat-card> -->
 
                 <mat-action-row *ngIf="f">
                     <button mat-raised-button color="warn" (click)="extention($event)">会議を延長する</button>
