@@ -1,0 +1,49 @@
+#card-whole{
+    margin: 10px;
+    height: 75vh;
+}
+
+#date{
+    text-align: left;
+}
+
+#meeting-room{
+    text-align: center;
+}
+
+#timer{
+    text-align: right;
+}
+
+.meeting-title{
+    font-weight: bolder;
+}
+
+#now-icon{
+    margin-right: 8px;
+    color: green;
+}
+
+#eventMenu{
+    background-color: indigo;
+    color: white;
+    margin-right: 10px;
+}
+
+#attendees{
+    color: chartreuse;
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 0px;
+    vertical-align:bottom;
+}
+
+#extend{
+    background-color: red;
+    font-weight: bolder;
+}
+
+#not-extend{
+    background-color:darkgray;
+    font-weight: bolder;
+}

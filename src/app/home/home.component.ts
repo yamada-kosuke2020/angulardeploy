@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit {
 
   // ミリ秒
   period;
+  
+  //会議終了ダイアログの終了ボタンが押されたか
+  result;
+  grayFlame;
 
 
   targetSchedule: Array<Schedule>
@@ -34,6 +38,7 @@ export class HomeComponent implements OnInit {
   meetingSubject;
   meetingStart;
   meetingEnd;
+  memo: string;
 
   flg = false;
 
@@ -86,6 +91,7 @@ export class HomeComponent implements OnInit {
           // TODO nullチェックする
           tempScedule.id = element.id;
           tempScedule.subject = element.subject;
+          tempScedule.memo = element.notes;
           tempScedule.startDate = element.start.dateTime;
           tempScedule.endDate = element.end.dateTime;
           tempScedule.creatorName = element.creator.name;
@@ -201,12 +207,17 @@ export class HomeComponent implements OnInit {
   }
 
   exit() {
-
-    this.timerStop();
     let dialogRef = this.matDialog.open(ExitDialogComponent, {
 
     });
-
+    dialogRef.afterClosed().subscribe((result:any)=>{
+      this.result=result;
+      if(this.result=="true"){
+        this.grayFlame=true;
+        console.log("タイマーを止めるよ");
+        this.timerStop();
+      }
+    });
   }
 
   nextCount = 1;
