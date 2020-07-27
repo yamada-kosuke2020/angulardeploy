@@ -43,12 +43,12 @@ export class HomeComponent implements OnInit {
   constructor(private apiService: ApiService, public matDialog: MatDialog, private userService: UserService) {
 
     // 開始時間
-    this.rangeStart = new Date(2020, 6, 27, 10, 0, 0);
+    this.rangeStart = new Date();
     console.log("開始" + this.rangeStart);
 
     // 終了時間
-    this.rangeEnd = new Date(2020, 6, 27, 23, 59, 59);
-    //this.rangeEnd.setHours(23, 59, 59, 999);
+    this.rangeEnd = new Date();
+    this.rangeEnd.setHours(23, 59, 59, 999);
 
     console.log("終了" + this.rangeEnd);
   }
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 
         console.log("今日の予定はありません");
         this.target.subject = "会議なし";
-        setInterval(() => { this.startTimer(new Date(2020, 6, 26, 21, 30)) }, 1000);
+        //setInterval(() => { this.startTimer(new Date(2020, 6, 26, 21, 30)) }, 1000);
 
       } else {
 
@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
         if (this.targetSchedule.length === 0) {
 
           console.log('現在開催中の会議はありません');
-
+          this.target.subject = "会議なし";
         } else {
 
           // 開催中の会議
