@@ -1,45 +1,45 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
     <span>MeTiMa</span>
-</mat-toolbar>
+</mat-toolbar> -->
+<!-- {{routeParam}} -->
 
-{{routeParam}}
-<mat-card class="login-card">
+<div id="login-card">
+    <mat-card class="mat-elevation-z10">
 
-    <mat-card-subtitle style="text-align: center;">ミ　ティ　マ</mat-card-subtitle>
-    <mat-card-title style="text-align: center;">Me Ti Ma</mat-card-title>
-   
-    <mat-card-content style="margin-top: 50px;">
+        <mat-card-subtitle id="subtitle">ミ　ティ　マ</mat-card-subtitle>
+        <mat-card-title id="title">Me Ti Ma</mat-card-title>
 
-        <form [formGroup]="myControl" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-card-content style="margin-top: 50px;">
 
-            <mat-form-field appearance="outline">
-                <mat-label>メールアドレス</mat-label>
-                <input matInput type="text" formControlName="email">
-            </mat-form-field>
+            <form [formGroup]="myControl" (ngSubmit)="onSubmit()" class="login-form">
+                <mat-form-field appearance="outline">
+                    <mat-label>ログイン名*</mat-label>
+                    <input matInput placeholder="***@neut.co.jp" type="text" formControlName="email">
+                </mat-form-field><br>
 
-            <p *ngIf="email.invalid" style="color: red;">メールアドレスは必須です</p>
+                <!-- <p *ngIf="email.invalid" style="color: red;">メールアドレスは必須です</p> -->
 
-            <mat-form-field appearance="outline">
-                <mat-label>パスワード</mat-label>
-                <input matInput type="password" formControlName="pass">
-            </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>パスワード*</mat-label>
+                    <input matInput placeholder="Password" type="password" formControlName="pass">
+                </mat-form-field><br>
 
-            <p *ngIf="pass.invalid" style="color: red;">パスワードは必須です</p>
+                <!-- <p *ngIf="pass.invalid" style="color: red;">パスワードは必須です</p> -->
 
-            <mat-form-field appearance="fill">
-                <mat-label>会議室選択</mat-label>
-                <mat-select [(value)]="selected">
-                    <mat-option *ngFor="let facility of facilities" [value]="facility.id">
-                        {{facility.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>会議室選択</mat-label>
+                    <mat-select [(value)]="selected">
+                        <mat-option *ngFor="let facility of facilities" [value]="facility.id">
+                            {{facility.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <p>selected: {{selected}}</p>
+                <!-- <p>selected: {{selected}}</p> -->
+                <p style="color: red;">{{message}}</p>
+                <button [disabled]="myControl.invalid" type="submit" mat-raised-button id="login-button">Login</button>
 
-            <button [disabled]="myControl.invalid" type="submit" mat-raised-button color="primary">ログイン</button>
-
-            <p style="color: red;">{{message}}</p>
-        </form>
-    </mat-card-content>
-</mat-card>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

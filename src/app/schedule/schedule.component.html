@@ -1,84 +1,68 @@
-<mat-card style="margin: 10px;" class="mat-elevation-z5">
-    <mat-card-title style="text-align: center;">
-        <h2>{{facilityName}}のスケジュール</h2>
-    </mat-card-title>
+<div style="background-color: white;">
+    <mat-card style="margin: 10px;" class="mat-elevation-z5">
+        <span id="date">{{now | date:"yyyy/MM/dd"}}</span>
+        <mat-card-title id="meeting-room">
+            <h2>{{facilityName}}</h2>
+        </mat-card-title>
 
-    <mat-card-content>
+        <!-- 共通タイマーを入れる -->
 
-        <mat-accordion>
+        <mat-card-content>
 
-
-            <p style="text-align: center;" *ngIf="scheduleList === undefined">{{message}}</p>
-
-            <!-- スケジュールリスト -->
-            <mat-expansion-panel style="margin: 10px;" *ngFor="let s of scheduleList; first as f" [expanded]="f"
-                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-
-                <mat-expansion-panel-header>
-
-                    <mat-panel-title>
-                        <mat-icon *ngIf="f" style="margin-right: 8px; color: green;">double_arrow</mat-icon>
-                        {{s.startDate | date:'HH:mm'}} ~ {{s.endDate | date:'HH:mm'}}
-                    </mat-panel-title>
+            <mat-accordion>
 
 
-                    <mat-panel-description>
+                <p style="text-align: center;" *ngIf="scheduleList === undefined">{{message}}</p>
 
-                        <p style="text-align: left;"><span
-                                style="background-color: indigo; color: white; margin-right: 10px;">{{s.eventMenu}}</span>
-                            {{s.subject}}</p>
+                <!-- スケジュールリスト -->
+                <mat-expansion-panel style="margin: 10px;" *ngFor="let s of scheduleList; first as f" [expanded]="f"
+                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
 
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+                    <mat-expansion-panel-header class="meeting-title">
+
+                        <mat-panel-title class="meeting-title">
+                            <mat-icon *ngIf="f" id="now-icon">double_arrow</mat-icon>
+                            {{s.startDate | date:'HH:mm'}} ~ {{s.endDate | date:'HH:mm'}}
+                        </mat-panel-title>
 
 
-                <mat-card style="margin-top: 10px;">
-                    <p>＜参加者＞<br>
-                        <span *ngFor="let atds of s.attendees" style="margin-right: 10px;">
-                            <mat-icon style="color: #388e3c; vertical-align: middle; margin-right: 5px;">person
-                            </mat-icon>
-                            {{atds.name}}
-                        </span></p>
-                    <p>＜メモ＞<br>
-                        {{s.memo}}
-                    </p>
-                </mat-card>
+                        <mat-panel-description class="meeting-title">
 
-                <!-- <mat-card style="margin-top: 10px;">
-                    <p>登録者
-                        <span>
-                            <mat-icon color="primary" style="vertical-align: middle; margin-right: 5px;">person
-                            </mat-icon>
-                            {{s.creatorName}}
-                        </span></p>
+                            <p style="text-align: left;">
+                                <span id="eventMenu">{{s.eventMenu}}</span>
+                                {{s.subject}}
+                            </p>
 
-                    <p>
-                        <span>
-                            <mat-icon>create</mat-icon> 登録日
-                            {{s.createdAt | date: 'yyy/MM/dd HH:mm'}}
-                        </span>
-                    </p>
-                </mat-card>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-                <mat-card style="margin-top: 10px;">
-                    <p>更新者
-                        <span>
-                            <mat-icon color="primary" style="vertical-align: middle; margin-right: 5px;">person
-                            </mat-icon>
-                            {{s.updaterName}}
-                        </span></p>
-                    <p>
-                        <mat-icon>update</mat-icon>更新日
-                        {{s.updatedAt  | date: 'yyy/MM/dd HH:mm'}}
-                    </p>
-                </mat-card> -->
 
-                <mat-action-row *ngIf="f">
-                    <button mat-raised-button color="warn" (click)="extention($event)">会議を延長する</button>
+                    <mat-card style="margin-top: 10px;">
+                        <p>＜参加者＞<br>
+                            <span *ngFor="let atds of s.attendees" style="margin-right: 10px;">
+                                <mat-icon id="attendees">person</mat-icon>
+                                {{atds.name}}
+                            </span>
+                        </p>
+                        <p>＜メモ＞<br>
+                            {{s.memo}}
+                        </p>
+                    </mat-card>
 
-                </mat-action-row>
+                    <ng-template [ngIf]="f">
+                        <!-- 次の会議が連続しているかどうか -->
+                        <mat-action-row *ngIf="flg; else nextNG">
+                            <button mat-button id="extend" (click)="extention($event)">延長</button>
+                        </mat-action-row>
+                        <ng-template #nextNG>
+                            <mat-action-row>
+                                <button mat-button disabled id="not-extend">延長NG</button>
+                            </mat-action-row>
+                        </ng-template>
+                    </ng-template>
 
-            </mat-expansion-panel>
-        </mat-accordion>
-    </mat-card-content>
-</mat-card>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+</div>

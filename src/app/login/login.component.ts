@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
 
     this.myControl = new FormGroup({
-      email: new FormControl('@neut.co.jp', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
       pass: new FormControl('', [Validators.required]),
     });
 
