@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-exit-dialog',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./exit-dialog.component.scss']
 })
 export class ExitDialogComponent implements OnInit {
-
-  constructor() { }
+  timerEnd=false;
+  constructor(public matDialogRef:MatDialogRef<ExitDialogComponent>) { }
 
   ngOnInit(): void {
   }
 
+  timerStop():void{
+    this.matDialogRef.close('true');
+  }
 }

@@ -26,6 +26,7 @@
     </div>
 </mat-card>
 
+<div style="background-color: white">
 <mat-tab-group mat-align-tabs="center">
     <mat-tab>
         <ng-template mat-tab-label>
@@ -43,5 +44,5 @@
         </ng-template>
         <app-schedule [scheduleList]="scheduleList" (action)="doClick($event)"></app-schedule>
     </mat-tab>
-
 </mat-tab-group>
+</div>
