@@ -12,7 +12,7 @@
             <mat-accordion>
 
 
-                <p style="text-align: center;" *ngIf="scheduleList === undefined">{{message}}</p>
+                <mat-card style="text-align: center;" *ngIf="scheduleList === undefined">{{message}}</mat-card>
 
                 <!-- スケジュールリスト -->
                 <mat-expansion-panel style="margin: 10px;" *ngFor="let s of scheduleList; first as f" [expanded]="f"
