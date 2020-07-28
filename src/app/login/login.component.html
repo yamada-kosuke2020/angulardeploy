@@ -1,31 +1,35 @@
-<div id="login-card" fxLayout="row" fxLayoutAlign="space-around center" >
-    <mat-card class="mat-elevation-z10" fxFlex="100%" fxFlex.xs="65%">
+<div class="back" style="background-image: url('../../haikei.png');">
+    <div id="login-card" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-card class="mat-elevation-z10" fxFlex="100%" fxFlex.xs="65%">
 
-        <mat-card-subtitle id="subtitle">ミ　ティ　マ</mat-card-subtitle>
-        <mat-card-title id="title">Me Ti Ma</mat-card-title>
+            <mat-card-subtitle id="subtitle">ミ　ティ　マ</mat-card-subtitle>
+            <mat-card-title id="title">Me Ti Ma</mat-card-title>
 
-        <mat-card-content style="margin-top: 50px;">
+            <mat-card-content style="margin-top: 50px;">
 
-            <form [formGroup]="myControl" (ngSubmit)="onSubmit()" class="login-form">
-                <mat-form-field appearance="outline" style="width: 300px;">
-                    <mat-label>ログイン名*</mat-label>
-                    <input matInput placeholder="***@neut.co.jp" type="text" formControlName="email">
-                </mat-form-field><br>
-                <mat-form-field appearance="outline" style="width: 300px;" >
-                    <mat-label>パスワード*</mat-label>
-                    <input matInput placeholder="Password" type="password" formControlName="pass">
-                </mat-form-field><br>
-                <mat-form-field appearance="fill" style="width: 300px;">
-                    <mat-label>会議室選択*</mat-label>
-                    <mat-select [(value)]="selected">
-                        <mat-option *ngFor="let facility of facilities" [value]="facility.id">
-                            {{facility.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <p style="color: red;">{{message}}</p>
-                <button [disabled]="myControl.invalid" type="submit" mat-raised-button id="login-button">Login</button>
-            </form>
-        </mat-card-content>
-    </mat-card>
+                <form [formGroup]="myControl" (ngSubmit)="onSubmit()" class="login-form">
+                    <mat-form-field appearance="outline" style="max-width: 500px;">
+                        <mat-label>ログイン名*</mat-label>
+                        <input matInput placeholder="***@neut.co.jp" type="text" formControlName="email">
+                    </mat-form-field><br>
+                    <mat-form-field appearance="outline" style="max-width: 500px;">
+                        <mat-label>パスワード*</mat-label>
+                        <input matInput placeholder="Password" type="password" formControlName="pass">
+                    </mat-form-field><br>
+                    <mat-form-field appearance="fill" style="max-width: 500px;">
+                        <mat-label>会議室選択*</mat-label>
+                        <mat-select [(value)]="selected">
+                            <mat-option *ngFor="let facility of facilities" [value]="facility.id">
+                                {{facility.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <p style="color: red;">{{message}}</p>
+                    <button [disabled]="myControl.invalid" type="submit" mat-raised-button
+                        id="login-button">Login</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
 </div>

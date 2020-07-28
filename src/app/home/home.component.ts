@@ -174,7 +174,9 @@ export class HomeComponent implements OnInit {
     let endTime: string = ("0" + new Date(this.target.endDate).getHours()).slice(-2) + ':' + ("0" + new Date(this.target.endDate).getMinutes()).slice(-2);
 
     let dialogRef = this.matDialog.open(MeetingExtentionDialogComponent, {
-      data: { 'endTime': endTime, 'baseEndTime': this.target.endDate }
+
+
+      data: { 'endTime': endTime, 'target': this.target }
     });
 
     dialogRef.afterClosed().subscribe(result => {

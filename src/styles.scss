@@ -19,7 +19,28 @@
 
 // /* ::::: アプリ全体のスタイルを以下に指定 ::::: */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-background-image: url("./haikei.png");
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    
+}
+
+html {
+    font-size: 75%;
+}
+
+@media screen and (min-width: 768px) {
+    html {
+        font-size: 87.5%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    html {
+        font-size: 100%;
+    }
 }

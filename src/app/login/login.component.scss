@@ -1,13 +1,13 @@
 #login-card{
      margin: auto; /*左右の余白が自動計算されて中央寄せ*/
-     position: absolute;
-     top: 0;
-     right: 0;
-     left: 0;
-     bottom: 0;
-     width: 500px;
+     //position: absolute;
+    //  top: 0;
+    //  right: 0;
+    //  left: 0;
+    //  bottom: 0;
+     max-width: 500px;
      text-align: center;
-     margin-top: 50px;
+     padding-top: 70px;
 }
 
 #subtitle{
@@ -24,4 +24,9 @@
     background-color: royalblue;
     color: white;
     margin-bottom: 20px;
+}
+
+.back{
+
+    height: 100%;
 }

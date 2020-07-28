@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -47,6 +47,9 @@ import { EndOfMeetingDialogComponent } from './end-of-meeting-dialog/end-of-meet
 import { ExitDialogComponent } from './exit-dialog/exit-dialog.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerInterceptor } from './spinner-interceptor';
+import { SpinnerService } from './service/spinner.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     LoginComponent,
     MeetingExtentionDialogComponent,
     EndOfMeetingDialogComponent,
-    ExitDialogComponent
+    ExitDialogComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [
+    SpinnerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 
   entryComponents: [
