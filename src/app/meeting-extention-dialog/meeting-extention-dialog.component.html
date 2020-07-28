@@ -1,11 +1,17 @@
 <h2 mat-dialog-title>会議時間延長</h2>
-
+<div class="nowtime">現在時刻 <label [ngModel]="this.now | date:'HH:mm'" (ngModelChange)=" this.now = $event"
+    ngDefaultControl>
+    {{now |date:"HH:mm"}}</label>
+</div>
 <mat-dialog-content>
     <input class="timeInput" value="{{data.endTime}}" type="time" #time>
-    <p>{{data.baseEndTime}}</p>
+    <!-- <p>{{data.baseEndTime}}</p> -->
+    <br>
 </mat-dialog-content>
+<button mat-raised-button  class="extention-mat-button">＋5分</button>
+<button mat-raised-button  class="extention-mat-button">＋10分</button><br>
 
-<mat-dialog-actions>
-    <button mat-raised-button color="accent" (click)="extention(time.value)">延長</button>
-    <button mat-raised-button color="primary" mat-dialog-close>キャンセル</button>
+<mat-dialog-actions align="end">
+    <button mat-raised-button class="confirm-button" (click)="extention(time.value)">延長</button>
+    <button mat-raised-button class="cancel-button" mat-dialog-close>キャンセル</button>
 </mat-dialog-actions>

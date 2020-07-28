@@ -1,5 +1,31 @@
 .timeInput{
-    width: 200px;
+    width: 300px;
     font-size: 20pt;
     padding: 5px;  
+}
+.nowtime{
+    font:4px;
+    width:100px; 
+}
+.extention-mat-button{
+    margin-top: 10%;
+    margin-right:25px; 
+    width:100px; 
+    height:50px;
+}
+.cancel-button{
+    background-color:#fa3535e8;
+    color: #fff;   
+}
+/* .extention-button{
+    background-color:#9966CC;
+    color: #fff; 
+} */
+.confirm-button{
+    background-color:#4169E1;
+    color: #fff; 
+}
+.nexticon{
+    height: 25px;
+    vertical-align: bottom;
 }

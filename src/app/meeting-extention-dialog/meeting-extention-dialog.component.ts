@@ -10,6 +10,11 @@ import { UserService } from '../service/user.service';
 })
 export class MeetingExtentionDialogComponent implements OnInit {
 
+  public now: Date;
+  interval = setInterval(() => {
+    this.now = new Date();
+  }, 1000);
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     public matDialogRef: MatDialogRef<MeetingExtentionDialogComponent>, private apiService: ApiService, private userService: UserService) { }
 
